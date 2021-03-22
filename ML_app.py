@@ -41,3 +41,5 @@ def run_ML_app():
 
     fig2 = m.plot_components(forecast)
     st.pyplot(fig2)
+
+    
