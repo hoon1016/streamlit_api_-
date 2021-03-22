@@ -11,7 +11,7 @@ from ML_app import run_ML_app
 def main():
     st.title('주식 차트 보기')
     #사이드바 메뉴
-    menu = ['Home','EDA','ML']
+    menu = ['Home','원하는 차트 보기','주식차트 예측']
     choice = st.sidebar.selectbox('MENU',menu)
 
     if choice == 'Home':
@@ -19,10 +19,10 @@ def main():
         st.write('보고싶은 주식차트 예측하기')
         st.write('왼쪽의 사이드바에서 선택하세요.')
 
-    elif choice =='EDA':
+    elif choice =='원하는 차트 보기':
         run_eda_app()
 
-    elif choice =='ML':
+    elif choice =='주식차트 예측':
         run_ML_app()
     
 
