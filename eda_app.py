@@ -6,19 +6,19 @@ import pandas as pd
 import numpy as np 
 import requests
 from fbprophet import Prophet
+from sklearn.preprocessing import MinMaxScaler
 
 def run_eda_app():
     
     
 
-    symbol = st.text_input('심볼 입력 : ')
+    symbol = st.text_input('보고싶은 주식 입력 : ')
     data = yf.Ticker(symbol)
 
     today = datetime.now().date().isoformat()
     print(today)
 
     df = data.history(start='2010-06-01',end=today)
-
 
     st.dataframe(df)
 
@@ -30,14 +30,6 @@ def run_eda_app():
     if st.button('거래량 보기'):
         st.line_chart(df['Volume'])
 
-    #yfinace 라이브러리만의 정보 
-
-    # data.info
-    # data.calendar
-    # data.major_holders
-    # data.institutional_holders
-    # data.recommendations
-    
     div_df=data.dividends
     
     st.dataframe(div_df.resample('Y').sum())
@@ -69,7 +61,7 @@ def run_eda_app():
     if len(corr_list) != 0 :
         st.dataframe(f_df[corr_list].corr())
         st.line_chart(f_df[corr_list])
-
+    
     #스탁트윗의 API를 호출!!
     res = requests.get('https://api.stocktwits.com/api/2/streams/symbol/{}.json'.format(symbol))
 
@@ -81,7 +73,7 @@ def run_eda_app():
 
     for message in res_data['messages']:
         
-        col1,col2 =st.beta_columns([1,4])
+        col1,col2 = st.beta_columns([1,4])
 
         with col1 : 
             st.image(message['user']['avatar_url'])
@@ -89,3 +81,4 @@ def run_eda_app():
             st.write('유저 이름 : ' +message ['user']['username'])
             st.write('트윗 내용 : ' +message ['body'])
             st.write('올린 시간 : ' +message ['created_at'])
+
